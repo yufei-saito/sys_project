@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.yufei.dao.ModuleDao">
+		<resultMap type="Module" id="moduleResult">
+				<id column="mid" property="mid"/>
+				<result column="mname" property="mname"/>
+				<result column="mtext" property="mtext"/>
+				<collection property="sonModules" ofType="SonModule">
+					<id column="sid" property="sid"/>
+					<result column="sname" property="sname"/>
+					<result column="url" property="url"/>
+				</collection>
+		</resultMap>
+
+  	
+  	
+  		<select id="findByGid" parameterType="Integer" resultMap="moduleResult">
+  			select m.*,s.* from sys_module m, role_module rm, son_module s where rm.rid=#{rid} and m.mid = rm.mid and s.mid = m.mid
+  		</select>
+</mapper>

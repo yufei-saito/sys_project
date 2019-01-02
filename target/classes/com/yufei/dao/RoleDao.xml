@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.yufei.dao.RoleDao">
+  		<resultMap type="Role" id="roleResult">
+  			<id column="rid" property="rid"/>
+  			<result column="rname" property="rname"/>
+  			<result column="rtext" property="rtext"/>
+  			<collection property="modules" ofType="Module">
+  				<id column="mid" property="mid"/>
+  				<result column="mname" property="mname"/>
+  			</collection>
+  		</resultMap>
+  		
+  		
+  		
+</mapper>

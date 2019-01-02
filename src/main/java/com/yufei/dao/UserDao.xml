@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.yufei.dao.UserDao">
+  		
+  		<resultMap type="User" id="userResult">
+  			<id column="uid" property="uid"/>
+  			<result column="uname" property="uname"/>
+  			<result column="upassword" property="upassword"/>
+  			<result column="nickname" property="nickname"/>
+  			<result column="phone" property="phone"/>
+  			<result column="email" property="email"/>
+  			<result column="ustatus" property="ustatus"/>
+  			<result column="utext" property="utext"/>
+  			<association property="group" javaType="Group">
+  				<id column="gid" property="gid"/>
+  				<result column="gname" property="gname"/>
+  			</association>
+  			<collection property="roles" ofType="Role">
+  				<id column="rid" property="rid"/>
+  				<result column="rname" property="rname"/>
+  			</collection>
+  		</resultMap>
+  		
+  		<select id="login" parameterType="User" resultMap="userResult">
+  			select u.*, r.*, g.*
+  				from sys_user u, sys_role r, sys_group g, user_role ur 
+  					where u.gid = g.gid 
+  					and u.uid = ur.uid 
+  					and r.rid = ur.rid 
+  					and u.uname = #{uname} 
+  					and u.upassword = #{upassword}
+  		</select>
+  		
+  		<select id="findAll"  resultMap="userResult" parameterType="User">
+  			select u.*, r.*, g.*
+  				from sys_user u, sys_role r, sys_group g, user_role ur 
+  					where u.gid = g.gid 
+  					and u.uid = ur.uid 
+  					and r.rid = ur.rid 
+  					<if test="uname!=null and uname!=''">
+  						and u.uname like "%"#{uname}"%"
+  					</if>
+  					<if test="nickname!=null and nickname!=''">
+  						and u.nickname like "%"#{nickname}"%"
+  					</if>
+  					<if test="group!=null and group.gid!=null and group.gid!=''">
+  						and u.gid = #{group.gid}
+  					</if>
+  					
+  					
+  		</select>
+  		
+</mapper>
