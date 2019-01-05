@@ -128,11 +128,16 @@ public class User  implements Serializable{
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+
+
 	@Override
 	public String toString() {
 		return "User [uid=" + uid + ", uname=" + uname + ", upassword=" + upassword + ", nickname=" + nickname
-				+ ", phone=" + phone + ", email=" + email + ", ustatus=" + ustatus + ", utext=" + utext + "]";
+				+ ", phone=" + phone + ", email=" + email + ", ustatus=" + ustatus + ", utext=" + utext + ", group="
+				+ group + "]";
 	}
+	
+	
 	
 	
 

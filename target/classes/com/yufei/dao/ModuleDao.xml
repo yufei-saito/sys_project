@@ -14,7 +14,53 @@
 
   	
   	
-  		<select id="findByGid" parameterType="Integer" resultMap="moduleResult">
-  			select m.*,s.* from sys_module m, role_module rm, son_module s where rm.rid=#{rid} and m.mid = rm.mid and s.mid = m.mid
+  		<select id="findByGid" parameterType="Integer" resultType="Module">
+  			select m.* from sys_module m,role_module rm where rm.rid = #{rid} and m.mid = rm.mid
+  			
+  		</select>
+  		
+  		<select id="findCount" parameterType="Module" resultType="Integer">
+  			select count(1) from sys_module
+  			<where>
+  				<if test="mname!=null and mname!=''">
+  					mname like "%"#{mname}"%"
+  				</if>
+  			</where>
+  		</select>
+  		
+  		<select id="findAllByModule" parameterType="Module" resultType="Module">
+  			select * from sys_module
+  			<where>
+  				<if test="mname!=null and mname!=''">
+  					mname like "%"#{mname}"%"
+  				</if>
+  			</where>
+  		</select>
+  		
+  		<insert id="addModule" parameterType="Module">
+  			insert into sys_module values(null,#{mname},#{mtext})
+  		</insert>
+  		
+  		<select id="findByMid" parameterType="Integer" resultType="Module">
+  			select * from sys_module where mid = #{mid}
+  		</select>
+  		
+  		<update id="updateModule" parameterType="Module">
+  			update sys_module set 
+  				mname = #{mname},
+  				mtext = #{mtext} 
+  				where mid = #{mid}
+  		</update>
+  		
+  		<delete id="deleteModule" parameterType="Integer">
+  			delete from sys_module where mid = #{mid}
+  		</delete>
+  		
+  		<delete id="deleteSonModule" parameterType="Integer">
+  			delete from son_module where mid = #{mid}
+  		</delete>
+  		
+  		<select id="findAll" resultType="Module">
+  			select * from sys_module
   		</select>
 </mapper>

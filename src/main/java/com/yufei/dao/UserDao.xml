@@ -32,7 +32,7 @@
   		</select>
   		
   		<select id="findAll"  resultMap="userResult" parameterType="User">
-  			select u.*, r.*, g.*
+  			select u.*, r.*, g.gname
   				from sys_user u, sys_role r, sys_group g, user_role ur 
   					where u.gid = g.gid 
   					and u.uid = ur.uid 
@@ -49,5 +49,84 @@
   					
   					
   		</select>
+  		
+  		<select id="findCount" parameterType="User" resultType="Integer">
+  			select count(1)
+  				from sys_user u, sys_role r, sys_group g, user_role ur 
+  					where u.gid = g.gid 
+  					and u.uid = ur.uid 
+  					and r.rid = ur.rid 
+  					<if test="uname!=null and uname!=''">
+  						and u.uname like "%"#{uname}"%"
+  					</if>
+  					<if test="nickname!=null and nickname!=''">
+  						and u.nickname like "%"#{nickname}"%"
+  					</if>
+  					<if test="group!=null and group.gid!=null and group.gid!=''">
+  						and u.gid = #{group.gid}
+  					</if>
+  		</select>
+  		
+  		
+  		<select id="findByUid" parameterType="Integer" resultMap="userResult">
+  				select u.*, r.*, g.*
+  				from sys_user u, sys_role r, sys_group g, user_role ur 
+  					where u.gid = g.gid 
+  					and u.uid = ur.uid 
+  					and r.rid = ur.rid 
+  					and u.uid = #{uid}
+  		</select>
+  		
+  		<update id="updateUser" parameterType="User">
+  			update sys_user set
+  				uname = #{uname},
+  				nickname = #{nickname},
+  				phone = #{phone},
+  				email = #{email},
+  				utext = #{utext},
+  				gid = #{group.gid} 
+  				where uid = #{uid}
+  		</update>
+  		
+  		<delete id="deleteUser_Role" parameterType="Integer">
+  			delete  from user_role where uid = #{uid}
+  		</delete>
+  		
+  		<insert id="addUser_Role" parameterType="User_Role">
+  			insert into user_role values(#{uid},#{rid})
+  		</insert>
+  		
+  		
+  		<update id="offUser" parameterType="Integer">
+  			update sys_user set ustatus = 0 where uid = #{uid} 
+  		</update>
+  		
+  		<update id="onUser" parameterType="Integer">
+  			update sys_user set ustatus = 1 where uid = #{uid} 
+  		</update>
+  		
+  		<delete id="deleteUser" parameterType="Integer">
+  			delete  from sys_user where uid = #{uid}
+  		</delete>
+  		
+  		<insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
+  			insert into sys_user values
+  				( 	null,
+  					#{uname},
+  					null,
+	  				#{nickname},
+	  				#{phone},
+	  				#{email},
+	  				#{group.gid},
+	  				1,
+	  				#{utext}
+  				)
+		
+  		</insert>
+  		
+  		<update id="updatePwd" parameterType="User">
+  			update sys_user set upassword = #{upassword} where uid =#{uid}
+  		</update>
+  		
   		
 </mapper>

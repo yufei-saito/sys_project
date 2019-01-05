@@ -28,6 +28,27 @@
 	href="assets/img/apple-icon.png">
 <link rel="icon" type="image/png" sizes="96x96"
 	href="assets/img/favicon.png">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.post({
+		url : "GroupListAjax.action",
+		success : function(data){
+			$.each(data,function(i,n){
+				$("#selectGroup").append("<option value='"+n.gid+"'>"+n.gname+"</option>");
+			});
+			$("#selectGroup option[value='${u_cond.group.gid}']").prop("selected","selected");
+		},
+		dataType : "json"
+		
+	});
+});
+
+	function topage(page){
+		$("#pageNumber").attr("value",page);
+		$("#user_search").submit();
+	}
+</script>
 </head>
 
 <body>
@@ -36,7 +57,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="index.html"><img src="assets/img/logo-dark.png"
+				<a href="main.jsp"><img src="assets/img/logo-dark.png"
 					alt="Klorofil Logo" class="img-responsive logo"></a>
 			</div>
 			<div class="container-fluid">
@@ -51,28 +72,24 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"><i class="lnr lnr-question-circle"></i>
-								<span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+								<span>帮助</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Basic Use</a></li>
-								<li><a href="#">Working With Data</a></li>
-								<li><a href="#">Security</a></li>
-								<li><a href="#">Troubleshooting</a></li>
+								<li><a href="#">关于本系统</a></li>
+								<li><a href="#">关于作者</a></li>
+								<li><a href="#">提交错误信息</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"><span>${user.nickname}</span> <i
+							data-toggle="dropdown"><span>${MyUser.nickname}</span> <i
 								class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="#"><i class="lnr lnr-user"></i> <span>My
-											Profile</span></a></li>
-								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+								<li><a href="${pageContext.request.contextPath}/userPassword.jsp"><i class="lnr lnr-cog"></i> <span>修改密码</span></a></li>
+								<li><a href="${pageContext.request.contextPath}/UserExit.action"><i class="lnr lnr-exit"></i> <span>登出</span></a></li>
 							</ul></li>
-
 					</ul>
 				</div>
 			</div>
 		</nav>
+		<hr/>
 		<!-- END NAVBAR -->
 		<!-- LEFT SIDEBAR -->
 		<div id="sidebar-nav" class="sidebar">
@@ -115,24 +132,25 @@
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="row">
-						<form class="form-inline" method="post" action="">
+						<form id="user_search" class="form-inline" method="post" action="${pageContext.request.contextPath}/UserList.action">
+							<input id="pageNumber" type="hidden" name="pageNum" value="1">
 							<div class="col-md-3">
 								<div class="input-group input-group-lg">
 									<span class="input-group-addon" id="sizing-addon1">用户名</span>
-									<input type="text" class="form-control" name="uname" id="exampleInputName2"  aria-describedby="sizing-addon1">
+									<input type="text" class="form-control" name="uname" id="exampleInputName2"  aria-describedby="sizing-addon1" value="${u_cond.uname}">
 								</div>
 							</div>	
 							<div class="col-md-3">
 								<div class="input-group input-group-lg">
 									<span class="input-group-addon" id="sizing-addon2">昵称</span>
-									<input type="text"class="form-control" name="nickname" id="exampleInputNickname2" id="sizing-addon2">
+									<input type="text"class="form-control" name="nickname" id="exampleInputNickname2" id="sizing-addon2" value="${u_cond.nickname}">
 								</div>
 							</div>	
 							<div class="col-md-3">
 								<div class="input-group input-group-lg">
 									<span class="input-group-addon" id="sizing-addon3">部门</span>
-									<select class="form-control" name="group.gid" id="selectGroup" id="sizing-addon3">
-										<option value="">-请选择-</option>
+									<select class="form-control" name="group.gid" id="selectGroup" id="selectGroup">
+										<option value="" >-请选择-</option>
 									</select>
 								</div>
 								<div class="pull-right">
@@ -141,7 +159,9 @@
 							</div>
 							<div class="col-md-3">		
 								<div class="pull-right">
-									<button class="btn btn-primary btn-lg">添加</button>
+									<a href="${pageContext.request.contextPath}/userAdd.jsp">
+										<input class="btn btn-info btn-lg" type="button" value="添加">
+									</a>
 								</div>
 							</div>
 						</form>
@@ -159,8 +179,9 @@
 								<td>部门</td>
 								<td>状态</td>
 								<td>备注</td>
+								<td>操作</td>
 							</tr>
-							<c:forEach items="${list}" var="u" varStatus="status">
+							<c:forEach items="${page.list}" var="u" varStatus="status">
 								<tr>
 									<td>${status.count}</td>
 									<td>${u.uname}</td>
@@ -168,11 +189,91 @@
 									<td>${u.phone}</td>
 									<td>${u.email}</td>
 									<td>${u.group.gname}</td>
-									<td>${u.ustatus}</td>
+									<td>
+										<c:if test="${u.ustatus ==1}">
+											启用
+										</c:if>
+										<c:if test="${u.ustatus ==0}">
+											禁用
+										</c:if>
+									</td>
 									<td>${u.utext}</td>
+									<td>
+										 <a class="btn btn-default" role="button" href="${pageContext.request.contextPath}/UserEdit.action?uid=${u.uid}">编辑</a>
+										 <a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/UserDelete.action?uid=${u.uid}">删除</a>
+										 <c:if test="${u.ustatus ==1}">
+											<a class="btn btn-default" role="button" href="${pageContext.request.contextPath}/UserOff.action?uid=${u.uid}">禁用</a>
+										 </c:if>
+										 <c:if test="${u.ustatus ==0}">
+											<a class="btn btn-default" role="button" href="${pageContext.request.contextPath}/UserOn.action?uid=${u.uid}">启用</a>
+										 </c:if>
+										 
+									</td>
 								</tr>
 							</c:forEach>
 						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12" align="center">
+						<nav aria-label="Page navigation">
+						  <ul class="pagination pagination-lg">
+						  	<li <c:if test="${page.pageNum ==1}">class="active"</c:if>>
+						  		<a href="javascript:topage(1)">
+							  		首页
+							  		<span class="sr-only">(current)</span>
+						  		</a>
+						  	</li>
+						    <li <c:if test="${page.pageNum ==1}">class="disabled"</c:if>>
+						    	<a href="javascript:topage(${page.pageNum+1})" aria-label="Previous">
+						    		<span aria-hidden="true">&laquo;</span>
+						    	</a>
+						    </li>
+						    <c:choose>
+						    	<c:when test="${page.maxPage<=5}">
+						    		<c:set var="begin" value="1"/>
+           							<c:set var="end" value="${page.maxPage}"/>
+						    	</c:when>
+						    	<c:otherwise>
+						    		<c:set var="begin" value="${page.pageNum -2}"/>
+           							<c:set var="end" value="${page.pageNum +2}"/>
+           							 <c:if test="${begin -2 <= 0}">
+						                <c:set var="begin" value="1"/>
+						                <c:set var="end" value="5"/>
+						            </c:if>
+						             <c:if test="${end +2 >= page.maxPage}">
+						                <c:set var="begin" value="${page.maxPage -4}"/>
+						                <c:set var="end" value="${page.maxPage}"/>
+						            </c:if>
+						    	</c:otherwise>
+						    </c:choose>
+						    
+						    <c:forEach var="i" begin="${begin}" end="${end}">
+						        <c:choose>
+						            <c:when test="${i == page.pageNum}">
+						                <li class="active"><a href="#">${i}</a></li>
+						            </c:when>
+						            <c:otherwise>
+						                <li><a href="javascript:topage(${i})">${i}</a></li>
+						            </c:otherwise>
+						        </c:choose>
+						    </c:forEach>
+						    <li <c:if test="${page.pageNum == page.maxPage}">class="disabled"</c:if>>
+						    	<a href="javascript:topage(${page.pageNum-1})" aria-label="Next">
+						    		<span aria-hidden="true">&raquo;</span>
+						    	</a>
+						    </li>
+						    <li <c:if test="${page.pageNum == page.maxPage}">class="active"</c:if>>
+						    	<a href="javascript:topage(${page.maxPage})">
+						    		尾页
+						    		<span class="sr-only">(current)</span>
+						   		</a>
+						    </li>
+						  </ul>  
+						</nav>
+					</div>
+					<div align="center">
+						<h4> 共${page.maxCount}条记录</h4>
 					</div>
 				</div>
 			</div>

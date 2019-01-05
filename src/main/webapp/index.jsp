@@ -7,6 +7,8 @@
 <title>登陆</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/jquery.min.js"></script>
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 </head>
 <body>
 	<!-- contact-form -->

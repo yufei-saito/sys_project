@@ -12,5 +12,56 @@
   		</resultMap>
   		
   		
+  		<select id="findAll" resultType="Role">
+  			select * from sys_role;
+  		</select>
   		
+  		<select id="findAllByRole" resultType="Role" parameterType="Role">
+  				select * from sys_role
+  				<where>
+  					<if test="rname !=null and rname!=''">
+  						rname like "%"#{rname}"%"
+  					</if>
+  				</where>
+  		</select>
+  		
+  		<select id="findCount" resultType="Integer" parameterType="Role">
+  			select count(1) from sys_role
+  			<where>
+  					<if test="rname !=null and rname!=''">
+  						rname like "%"#{rname}"%"
+  					</if>
+  			</where>
+  		</select>
+  		
+  		<insert id="addRole" parameterType="Role">
+  			insert into sys_role values(null,#{rname},#{rtext})
+  		</insert>
+  		
+  		<select id="findByRid" resultType="Role" parameterType="Integer">
+  			select * from sys_role where rid = #{rid}
+  		</select>
+	
+		<update id="updateRole" parameterType="Role">
+			update sys_role set
+				rname = #{rname},
+				rtext = #{rtext}
+				where rid = #{rid}
+		</update>
+		
+		<delete id="deleteRole_Module" parameterType="Integer">
+			delete from role_module where rid = #{rid}
+		</delete>
+		
+		<delete id="deleteRole" parameterType="Integer">
+			delete from sys_role where rid = #{rid}
+		</delete>
+		
+		<select id="findRole_Module" parameterType="Integer" resultType="Integer">
+			select mid from role_module where rid = #{rid}
+		</select>
+		
+		<insert id="addRole_Module" parameterType="RoleVo">
+			insert into role_module values(#{rid},#{mid})
+		</insert>
 </mapper>

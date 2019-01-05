@@ -18,7 +18,7 @@ public class Page<E> implements Serializable{
 	public Page() {
 		super();
 		pageNum =1;
-		everyCount = 15;
+		everyCount = 10;
 	}
 	public Integer getPageNum() {
 		return pageNum;
