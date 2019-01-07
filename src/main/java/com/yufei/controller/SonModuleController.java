@@ -1,5 +1,7 @@
 package com.yufei.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yufei.pojo.Page;
 import com.yufei.pojo.SonModule;
+import com.yufei.pojo.User;
 import com.yufei.service.SonModuleService;
 
 @Controller
@@ -32,9 +35,10 @@ public class SonModuleController {
 		
 	//添加子模块
 	@RequestMapping("/SonModuleAdd.action")
-	public String moduleSonAdd(SonModule sm) {
+	public String moduleSonAdd(SonModule sm,HttpServletRequest request) {
 		ss.addSonModule(sm);
-		return "redirect:/SonModuleList.action?mid="+sm.getModule().getMid();
+		User user = (User) request.getSession().getAttribute("MyUser");
+		return "redirect:/UserLogin.action?uname="+user.getUname()+"&upassword="+user.getUpassword();
 	}
 	
 	//根据SID查询单个子模块
@@ -47,9 +51,10 @@ public class SonModuleController {
 	
 	//更新子模块
 	@RequestMapping("/SonModuleUpdate.action")
-	public String sonModuleUpdate(SonModule sm) {
+	public String sonModuleUpdate(SonModule sm,HttpServletRequest request) {
 		ss.updateSonModule(sm);
-		return "redirect:/SonModuleList.action?mid="+sm.getModule().getMid();
+		User user = (User) request.getSession().getAttribute("MyUser");
+		return "redirect:/UserLogin.action?uname="+user.getUname()+"&upassword="+user.getUpassword();
 	}
 		
 }	

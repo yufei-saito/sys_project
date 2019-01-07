@@ -182,10 +182,19 @@
 							  		<span class="sr-only">(current)</span>
 						  		</a>
 						  	</li>
-						    <li <c:if test="${page.pageNum ==1}">class="disabled"</c:if>>
-						    	<a href="javascript:topage(${page.pageNum+1})" aria-label="Previous">
-						    		<span aria-hidden="true">&laquo;</span>
-						    	</a>
+						    <li <c:if test="${page.pageNum == 1}">class="disabled"</c:if>>
+						    	<c:choose>
+						    		<c:when test="${page.pageNum ==1}">
+						    			<a href="#" aria-label="Previous">
+						    			<span aria-hidden="true">&laquo;</span>
+						    		</a>
+						    		</c:when>
+						    		<c:otherwise>
+								    	<a href="javascript:topage(${page.pageNum -1})" aria-label="Previous">
+								    		<span aria-hidden="true">&laquo;</span>
+								    	</a>
+						    		</c:otherwise>
+						    	</c:choose>
 						    </li>
 						    <c:choose>
 						    	<c:when test="${page.maxPage<=5}">
@@ -217,9 +226,18 @@
 						        </c:choose>
 						    </c:forEach>
 						    <li <c:if test="${page.pageNum == page.maxPage}">class="disabled"</c:if>>
-						    	<a href="javascript:topage(${page.pageNum-1})" aria-label="Next">
-						    		<span aria-hidden="true">&raquo;</span>
-						    	</a>
+						    	<c:choose>
+						    		<c:when test="${page.pageNum == page.maxPage}">
+						    			<a href="#" aria-label="Next">
+						    			<span aria-hidden="true">&raquo;</span>
+						    		</a>
+						    		</c:when>
+						    		<c:otherwise>
+								    	<a href="javascript:topage(${page.pageNum+1})" aria-label="Next">
+								    		<span aria-hidden="true">&raquo;</span>
+								    	</a>
+						    		</c:otherwise>
+						    	</c:choose>
 						    </li>
 						    <li <c:if test="${page.pageNum == page.maxPage}">class="active"</c:if>>
 						    	<a href="javascript:topage(${page.maxPage})">

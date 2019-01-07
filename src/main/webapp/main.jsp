@@ -48,7 +48,8 @@
 								<li><a href="#">关于本系统</a></li>
 								<li><a href="#">关于作者</a></li>
 								<li><a href="#">提交错误信息</a></li>
-							</ul></li>
+							</ul>
+							</li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"><span>${MyUser.nickname}</span> <i
 								class="icon-submenu lnr lnr-chevron-down"></i></a>
