@@ -30,12 +30,18 @@
 	href="assets/img/favicon.png">
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript">
-$(function(){
-	function topage(page){
+	function deleteCheck(){
+		if(confirm("确定删除吗")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	function toPage(page){
 		$("#pageNumber").attr("value",page);
 		$("#role_search").submit();
 	}
-})
 </script>
 </head>
 
@@ -160,7 +166,7 @@ $(function(){
 									<td>
 										 <a class="btn btn-default" role="button" href="${pageContext.request.contextPath}/RoleEdit.action?rid=${r.rid}">编辑</a>
 										 <a class="btn btn-default" role="button" href="${pageContext.request.contextPath}/RoleModule.action?rid=${r.rid}">权限管理</a>
-										 <a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/RoleDelete.action?rid=${r.rid}">删除</a>
+										 <a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/RoleDelete.action?rid=${r.rid}" onclick="return deleteCheck()">删除</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -242,7 +248,6 @@ $(function(){
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
-	<script src="assets/vendor/jquery/jquery.min.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>

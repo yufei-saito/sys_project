@@ -24,5 +24,7 @@ public interface ModuleDao {
 	void deleteSonModule(Integer mid);
 
 	List<Module> findAll();
+	
+	void deleteRole_Module(Integer mid);
 
 }

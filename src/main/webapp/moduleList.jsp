@@ -30,12 +30,17 @@
 	href="assets/img/favicon.png">
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript">
-$(function(){
 	function topage(page){
 		$("#pageNumber").attr("value",page);
 		$("#module_search").submit();
 	}
-})
+	function deleteCheck(){
+		if(confirm("确定删除吗")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 </script>
 </head>
 
@@ -160,7 +165,7 @@ $(function(){
 									<td>
 										 <a class="btn btn-default" role="button" href="${pageContext.request.contextPath}/ModuleEdit.action?mid=${m.mid}">编辑</a>
 										 <a class="btn btn-default" role="button" href="${pageContext.request.contextPath}/SonModuleList.action?mid=${m.mid}">子模块</a>
-										 <a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/ModuleDelete.action?mid=${m.mid}">删除</a>
+										 <a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/ModuleDelete.action?mid=${m.mid}" onclick="return deleteCheck()">删除</a>
 									</td>
 								</tr>
 							</c:forEach>

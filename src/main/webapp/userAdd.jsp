@@ -47,12 +47,35 @@
 			url : "RoleListAjax.action",
 			success : function(data){
 				$.each(data,function(i,n){
-					$("#rolebox").append("<input type='checkbox' value='"+n.rid+"' name='roles'/>"+n.rname);
+					$("#rolebox").append("<input type='checkbox' value='"+n.rid+"' name='roles' class='roles' />"+n.rname);
 				})
 			},
 			dataType : "json"
 			
 		});
+		
+		$("#addButton").click(function(){
+			var username = $("#name").val();
+			var nickname = $("#nickname").val();
+			var groupid  = $("#selectGroup").val();
+			if(username ==""){
+				alert("用户名不能为空!");
+				return;
+			}
+			if(nickname ==""){
+				alert("昵称不能为空!");
+				return;
+			}
+			if($(".roles:checked").length==0){
+				alert("角色不能为空!");
+				return;
+			}
+			if(groupid ==""){
+				alert("部门不能为空!");
+				return ;
+			}
+			$("#addForm").submit();
+		})
 		
 	});
 </script>
@@ -140,13 +163,13 @@
 			<div class="main-content">
 				<div class="row">
 					<div class="col-md-12">
-						<form action="${pageContext.request.contextPath}/UserAdd.action" method="post" class="form-inline">
+						<form action="${pageContext.request.contextPath}/UserAdd.action" method="post" class="form-inline" id="addForm">
 							<table class="table table-bordered">
   									<tr>
-  										<th><label for="exampleInputUname">用户名</label></th>
-  										<td><input type="text" name="user.uname"  class="form-control"></td>
-  										<th><label for="exampleInputNickname">昵称</label></th>
-  										<td><input type="text" name="user.nickname"  class="form-control"></td>
+  										<th><label for="exampleInputUname">*用户名</label></th>
+  										<td><input type="text" name="user.uname"  class="form-control" id="name"></td>
+  										<th><label for="exampleInputNickname">*昵称</label></th>
+  										<td><input type="text" name="user.nickname"  class="form-control" id="nickname"></td>
   									</tr>
   									<tr>
   										<th><label for="exampleInputPhone">电话</label></th>
@@ -155,13 +178,13 @@
   										<td><input type="text" name="user.email"  class="form-control"></td>
   									</tr>
   									<tr>
-  										<th><label for="exampleInputGroup">部门</label></th>
+  										<th><label for="exampleInputGroup">*部门</label></th>
   										<td>
-	  										<select name="user.group.gid" id="selectGroup">	
+	  										<select name="user.group.gid" id="selectGroup" >	
 	  											<option value=''>-请选择-</option>
 	  										</select>
   										</td>
-  										<th><label for="exampleInputGroup">角色</label></th>
+  										<th><label for="exampleInputGroup">*角色</label></th>
   										<td>
 	  										<div class="checkbox">
 											  <label id="rolebox">
@@ -178,7 +201,7 @@
   									<tr>
   										<td colspan="4" >
   											<div align="center">
-  												<button type="submit" class="btn btn-default btn-lg">添加</button>
+  												<button type="button" class="btn btn-default btn-lg" id="addButton">添加</button>
   											</div>
   										</td>
   									</tr>

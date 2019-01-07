@@ -30,6 +30,23 @@
 	href="assets/img/favicon.png">
 	
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#editButton").click(function(){
+			var modulename = $("#name").val();
+			var moduleURL = $("#url").val();
+			if(modulename ==""){
+				alert("模块名不能为空!");
+				return;
+			}
+			if(moduleURL ==""){
+				alert("URL不能为空!");
+				return;
+			}
+			$("#editForm").submit();
+		})
+	})
+</script>
 </head>
 
 <body>
@@ -114,24 +131,24 @@
 			<div class="main-content">
 				<div class="row">
 					<div class="col-md-12">
-						<form action="${pageContext.request.contextPath}/SonModuleUpdate.action" method="post" class="form-inline">
+						<form action="${pageContext.request.contextPath}/SonModuleUpdate.action" method="post" class="form-inline" id="editForm">
 							<input type="hidden" name="sid" value="${editSonModule.sid}">
 							<input type="hidden" name="module.mid" value="${editSonModule.module.mid}">
 							<table class="table table-bordered">
   									<tr>
-  										<th><label for="exampleInputUname">子模块名</label></th>
-  										<td><input type="text" name="sname"  class="form-control" value="${editSonModule.sname}"></td>
+  										<th><label for="exampleInputUname">*子模块名</label></th>
+  										<td><input type="text" name="sname"  class="form-control" value="${editSonModule.sname}" id="name"></td>
   									</tr>
   									<tr>
-  										<th><label for="exampleInputGroup">URL</label></th>
+  										<th><label for="exampleInputGroup">*URL</label></th>
   										<td>
-  											<input type="text" name="url"  class="form-control" value="${editSonModule.url}">
+  											<input type="text" name="url"  class="form-control" value="${editSonModule.url}" id="url">
   										</td>
   									</tr>
   									<tr>
   										<td colspan="2" >
   											<div align="center">
-  												<button type="submit" class="btn btn-default btn-lg">修改</button>
+  												<button type="button" class="btn btn-default btn-lg" id="editButton">修改</button>
   											</div>
   										</td>
   									</tr>

@@ -55,6 +55,7 @@ public class ModuleServiceImpl implements ModuleService {
 
 	@Override
 	public void deleteModule(Integer mid) {
+		dao.deleteRole_Module(mid);
 		dao.deleteSonModule(mid);
 		dao.deleteModule(mid);
 		

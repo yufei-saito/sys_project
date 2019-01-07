@@ -63,4 +63,8 @@
   		<select id="findAll" resultType="Module">
   			select * from sys_module
   		</select>
+  		
+  		<delete id="deleteRole_Module" parameterType="Integer">
+  			delete from role_module where mid = #{mid};
+  		</delete>
 </mapper>

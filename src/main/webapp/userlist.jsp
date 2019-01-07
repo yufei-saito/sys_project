@@ -48,6 +48,13 @@ $(function(){
 		$("#pageNumber").attr("value",page);
 		$("#user_search").submit();
 	}
+	function deleteCheck(){
+		if(confirm("确定删除吗")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 </script>
 </head>
 
@@ -200,7 +207,7 @@ $(function(){
 									<td>${u.utext}</td>
 									<td>
 										 <a class="btn btn-default" role="button" href="${pageContext.request.contextPath}/UserEdit.action?uid=${u.uid}">编辑</a>
-										 <a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/UserDelete.action?uid=${u.uid}">删除</a>
+										 <a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/UserDelete.action?uid=${u.uid}" onclick="return deleteCheck()">删除</a>
 										 <c:if test="${u.ustatus ==1}">
 											<a class="btn btn-default" role="button" href="${pageContext.request.contextPath}/UserOff.action?uid=${u.uid}">禁用</a>
 										 </c:if>

@@ -45,6 +45,13 @@
 			}
 			
 		}
+		$("#moduleButton").click(function(){
+			if($(".mids:checked").length==0){
+				alert("权限不能为空!");
+				return ;
+			}
+			$("#moduleForm").submit();
+		})
 		
 	})
 </script>
@@ -132,21 +139,21 @@
 			<div class="main-content">
 				<div class="row">
 					<div class="col-md-12">
-						<form action="${pageContext.request.contextPath}/RoleModuleUpdate.action" method="post" class="form-inline">
+						<form action="${pageContext.request.contextPath}/RoleModuleUpdate.action" method="post" class="form-inline" id="moduleForm">
 							<input type="hidden" name="rid" value="${rid}">
 							<table class="table table-bordered">
   									<tr>
   										<th ><label for="exampleInputUname">权限管理</label></th>
   										<td>
   											<c:forEach items="${list}" var="m">
-  												<input type="checkbox" name="mids" value="${m.mid}">${m.mname}
+  												<input type="checkbox" name="mids" value="${m.mid}" class="mids">${m.mname}
   											</c:forEach>
   										</td>
   									</tr>
   									<tr>
   										<td colspan="2" >
   											<div align="center">
-  												<button type="submit" class="btn btn-default btn-lg">修改</button>
+  												<button type="button" class="btn btn-default btn-lg" id="moduleButton">修改</button>
   											</div>
   										</td>
   									</tr>

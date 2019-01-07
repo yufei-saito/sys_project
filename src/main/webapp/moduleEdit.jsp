@@ -30,6 +30,18 @@
 	href="assets/img/favicon.png">
 	
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#editButton").click(function(){
+			var modulename = $("#name").val();
+			if(modulename ==""){
+				alert("模块名不能为空!");
+				return;
+			}
+			$("#editForm").submit();
+		})
+	})
+</script>
 </head>
 
 <body>
@@ -114,12 +126,12 @@
 			<div class="main-content">
 				<div class="row">
 					<div class="col-md-12">
-						<form action="${pageContext.request.contextPath}/ModuleUpdate.action" method="post" class="form-inline">
+						<form action="${pageContext.request.contextPath}/ModuleUpdate.action" method="post" class="form-inline" id="editForm">
 							<input type="hidden" name="mid" value="${editModule.mid}">
 							<table class="table table-bordered">
   									<tr>
-  										<th><label for="exampleInputUname">模块名</label></th>
-  										<td><input type="text" name="mname"  class="form-control" value="${editModule.mname}"></td>
+  										<th><label for="exampleInputUname">*模块名</label></th>
+  										<td><input type="text" name="mname"  class="form-control" value="${editModule.mname}" id="name"></td>
   									</tr>
   									<tr>
   										<th><label for="exampleInputGroup">备注</label></th>
@@ -130,7 +142,7 @@
   									<tr>
   										<td colspan="2" >
   											<div align="center">
-  												<button type="submit" class="btn btn-default btn-lg">修改</button>
+  												<button type="button" class="btn btn-default btn-lg" id="editButton">修改</button>
   											</div>
   										</td>
   									</tr>

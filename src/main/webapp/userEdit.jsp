@@ -48,7 +48,7 @@
 			url : "RoleListAjax.action",
 			success : function(data){
 				$.each(data,function(i,n){
-					$("#rolebox").append("<input type='checkbox' value='"+n.rid+"' name='roles'/>"+n.rname);
+					$("#rolebox").append("<input type='checkbox' value='"+n.rid+"' name='roles' class='roles'/>"+n.rname);
 				});
 				var array = new Array();  
 				<c:forEach items="${editUser.roles}" var="r">  
@@ -67,6 +67,29 @@
 			dataType : "json"
 			
 		});
+		
+		$("#editButton").click(function(){
+			var username = $("#name").val();
+			var nickname = $("#nickname").val();
+			var groupid  = $("#selectGroup").val();
+			if(username ==""){
+				alert("用户名不能为空!");
+				return;
+			}
+			if(nickname ==""){
+				alert("昵称不能为空!");
+				return;
+			}
+			if($(".roles:checked").length==0){
+				alert("角色不能为空!");
+				return;
+			}
+			if(groupid ==""){
+				alert("部门不能为空!");
+				return ;
+			}
+			$("#editForm").submit();
+		})
 		
 
 		
@@ -159,14 +182,14 @@
 			<div class="main-content">
 				<div class="row">
 					<div class="col-md-12">
-						<form action="${pageContext.request.contextPath}/UserUpdate.action" method="post" class="form-inline">
+						<form action="${pageContext.request.contextPath}/UserUpdate.action" method="post" class="form-inline" id="editForm">
 							<input type="hidden" name="user.uid" value="${editUser.uid}">
 							<table class="table table-bordered">
   									<tr>
-  										<th><label for="exampleInputUname">用户名</label></th>
-  										<td><input type="text" name="user.uname" value="${editUser.uname}" class="form-control"></td>
-  										<th><label for="exampleInputNickname">昵称</label></th>
-  										<td><input type="text" name="user.nickname" value="${editUser.nickname}" class="form-control"></td>
+  										<th><label for="exampleInputUname">*用户名</label></th>
+  										<td><input type="text" name="user.uname" value="${editUser.uname}" class="form-control" id="name"></td>
+  										<th><label for="exampleInputNickname">*昵称</label></th>
+  										<td><input type="text" name="user.nickname" value="${editUser.nickname}" class="form-control" id="nickname"></td>
   									</tr>
   									<tr>
   										<th><label for="exampleInputPhone">电话</label></th>
@@ -175,13 +198,12 @@
   										<td><input type="text" name="user.email" value="${editUser.email}" class="form-control"></td>
   									</tr>
   									<tr>
-  										<th><label for="exampleInputGroup">部门</label></th>
+  										<th><label for="exampleInputGroup">*部门</label></th>
   										<td>
 	  										<select name="user.group.gid" id="selectGroup">	
-	  											<option value=''>-请选择-</option>
 	  										</select>
   										</td>
-  										<th><label for="exampleInputGroup">角色</label></th>
+  										<th><label for="exampleInputGroup">*角色</label></th>
   										<td>
 	  										<div class="checkbox">
 											  <label id="rolebox">
@@ -195,7 +217,7 @@
   											<textarea name="user.utext">${editUser.utext}</textarea>
   										</td>
   										<td colspan="2" >
-  											<button type="submit" class="btn btn-default btn-lg">修改</button>
+  											<button type="button" class="btn btn-default btn-lg" id="editButton">修改</button>
   										</td>
   									</tr>
 							</table>

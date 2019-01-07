@@ -30,6 +30,18 @@
 	href="assets/img/favicon.png">
 	
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#addButton").click(function(){
+			var rolename = $("#name").val();
+			if(rolename ==""){
+				alert("角色名不能为空!");
+				return;
+			}
+			$("#addForm").submit();
+		})
+	})
+</script>
 </head>
 
 <body>
@@ -114,11 +126,11 @@
 			<div class="main-content">
 				<div class="row">
 					<div class="col-md-12">
-						<form action="${pageContext.request.contextPath}/RoleAdd.action" method="post" class="form-inline">
+						<form action="${pageContext.request.contextPath}/RoleAdd.action" method="post" class="form-inline" id="addForm">
 							<table class="table table-bordered">
   									<tr>
-  										<th><label for="exampleInputUname">角色名</label></th>
-  										<td><input type="text" name="rname"  class="form-control"></td>
+  										<th><label for="exampleInputUname">*角色名</label></th>
+  										<td><input type="text" name="rname"  class="form-control" id="name"></td>
   									</tr>
   									<tr>
   										<th><label for="exampleInputGroup">备注</label></th>
@@ -129,7 +141,7 @@
   									<tr>
   										<td colspan="2" >
   											<div align="center">
-  												<button type="submit" class="btn btn-default btn-lg">添加</button>
+  												<button type="button" class="btn btn-default btn-lg" id="addButton">添加</button>
   											</div>
   										</td>
   									</tr>
