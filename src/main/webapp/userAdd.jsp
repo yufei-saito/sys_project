@@ -185,11 +185,8 @@
 	  										</select>
   										</td>
   										<th><label for="exampleInputGroup">*角色</label></th>
-  										<td>
-	  										<div class="checkbox">
-											  <label id="rolebox">
-											  </label>
-											</div>
+  										<td id="rolebox">
+											 
 			  							</td>
   									</tr>
   									<tr>

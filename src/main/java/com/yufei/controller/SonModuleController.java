@@ -42,7 +42,6 @@ public class SonModuleController {
 	public String sonModuleEdit(Integer sid,Model m) {
 		SonModule sm =ss.findBySid(sid);
 		m.addAttribute("editSonModule", sm);
-		System.out.println(sm);
 		return "sonEdit";
 	}
 	
@@ -50,7 +49,6 @@ public class SonModuleController {
 	@RequestMapping("/SonModuleUpdate.action")
 	public String sonModuleUpdate(SonModule sm) {
 		ss.updateSonModule(sm);
-		System.out.println(sm.getModule().getMid());
 		return "redirect:/SonModuleList.action?mid="+sm.getModule().getMid();
 	}
 		

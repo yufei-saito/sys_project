@@ -2,6 +2,8 @@ package com.yufei.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.object.RdbmsOperation;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import com.yufei.pojo.Module;
 import com.yufei.pojo.Page;
 import com.yufei.pojo.Role;
 import com.yufei.pojo.RoleVo;
+import com.yufei.pojo.User;
 import com.yufei.service.ModuleService;
 import com.yufei.service.RoleService;
 
@@ -85,10 +88,10 @@ public class RoleController {
 	
 	//根据RID修改权限
 	@RequestMapping("/RoleModuleUpdate.action")
-	public String roleModuleUpdate(Integer rid, Integer[] mids ) {
+	public String roleModuleUpdate(Integer rid, Integer[] mids,HttpServletRequest request) {
 		rs.updateRoleModule(rid,mids);
-
-		return "redirect:/RoleList.action";
+		User user = (User) request.getSession().getAttribute("MyUser");
+		return "redirect:/UserLogin.action?uname="+user.getUname()+"&upassword="+user.getUpassword();
 	}
 	
 }

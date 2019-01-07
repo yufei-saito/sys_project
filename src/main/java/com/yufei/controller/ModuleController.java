@@ -2,6 +2,8 @@ package com.yufei.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yufei.pojo.Module;
 import com.yufei.pojo.Page;
 import com.yufei.pojo.SonModule;
+import com.yufei.pojo.User;
 import com.yufei.service.ModuleService;
 
 @Controller
@@ -39,7 +42,7 @@ public class ModuleController {
 	@RequestMapping("/ModuleAdd.action")
 	public String moduleAdd(Module m) {
 		ms.addModule(m);
-		return "redirect:/ModuleList.action";
+		return "/ModuleList.action";
 	}
 	
 	//根据MID查询单个模块
@@ -52,16 +55,18 @@ public class ModuleController {
 	
 	//更新模块
 	@RequestMapping("/ModuleUpdate.action")
-	public String moduleUpdate(Module m) {
+	public String moduleUpdate(Module m,HttpServletRequest request) {
 		ms.updateModule(m);
-		return "redirect:/ModuleList.action";
+		User user = (User) request.getSession().getAttribute("MyUser");
+		return "redirect:/UserLogin.action?uname="+user.getUname()+"&upassword="+user.getUpassword();
 	}
 	
 	//删除模块
 	@RequestMapping("/ModuleDelete.action")
-	public String moduleDelete(Integer mid) {
+	public String moduleDelete(Integer mid,HttpServletRequest request) {
 		ms.deleteModule(mid);
-		return "redirect:/ModuleList.action";
+		User user = (User) request.getSession().getAttribute("MyUser");
+		return "redirect:/UserLogin.action?uname="+user.getUname()+"&upassword="+user.getUpassword();
 	}
 	
 	
