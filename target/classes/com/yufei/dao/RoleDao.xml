@@ -23,6 +23,7 @@
   						rname like "%"#{rname}"%"
   					</if>
   				</where>
+  				 order by rid desc
   		</select>
   		
   		<select id="findCount" resultType="Integer" parameterType="Role">

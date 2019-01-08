@@ -13,7 +13,11 @@
 		</resultMap>
 
   		<select id="findByMid" parameterType="Integer" resultType="SonModule">
-  			select * from son_module where mid = #{mid}
+  			select * from son_module where mid = #{mid} 
+  		</select>
+  		
+  		<select id="findByMidDesc" parameterType="Integer" resultType="SonModule">
+  			select * from son_module where mid = #{mid} order by sid desc
   		</select>
   		
   		<select id="findCount" parameterType="Integer" resultType="Integer">

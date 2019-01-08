@@ -6,7 +6,9 @@ import com.yufei.pojo.Page;
 import com.yufei.pojo.SonModule;
 
 public interface SonModuleService {
-	List<SonModule> findByGid(Integer mid);
+	List<SonModule> findByMid(Integer mid);
+	
+	List<SonModule> findByMidDesc(Integer mid);
 
 	Page<SonModule> findSonModule(Page p, Integer mid);
 

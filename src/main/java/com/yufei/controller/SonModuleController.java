@@ -2,6 +2,7 @@ package com.yufei.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.aspectj.weaver.reflect.ReflectionBasedResolvedMemberImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,9 @@ import com.yufei.service.SonModuleService;
 public class SonModuleController {
 	@Autowired
 	private SonModuleService ss;
+	
+	@Autowired
+	private UserController uc;
 	
 	//查看子模块
 	@RequestMapping("/SonModuleList.action")
@@ -38,7 +42,9 @@ public class SonModuleController {
 	public String moduleSonAdd(SonModule sm,HttpServletRequest request) {
 		ss.addSonModule(sm);
 		User user = (User) request.getSession().getAttribute("MyUser");
-		return "redirect:/UserLogin.action?uname="+user.getUname()+"&upassword="+user.getUpassword();
+		uc.userLogin(user, request);
+		return "redirect:/SonModuleList.action?mid="+sm.getModule().getMid();
+		
 	}
 	
 	//根据SID查询单个子模块
@@ -54,7 +60,8 @@ public class SonModuleController {
 	public String sonModuleUpdate(SonModule sm,HttpServletRequest request) {
 		ss.updateSonModule(sm);
 		User user = (User) request.getSession().getAttribute("MyUser");
-		return "redirect:/UserLogin.action?uname="+user.getUname()+"&upassword="+user.getUpassword();
+		uc.userLogin(user, request);
+		return "redirect:/SonModuleList.action?mid="+sm.getModule().getMid();
 	}
 		
 }	

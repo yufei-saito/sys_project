@@ -46,6 +46,7 @@
   					<if test="group!=null and group.gid!=null and group.gid!=''">
   						and u.gid = #{group.gid}
   					</if>
+  					 order by u.uid desc
   					
   					
   		</select>

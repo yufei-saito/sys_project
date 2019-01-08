@@ -35,6 +35,7 @@
   					mname like "%"#{mname}"%"
   				</if>
   			</where>
+  			 order by mid desc
   		</select>
   		
   		<insert id="addModule" parameterType="Module">

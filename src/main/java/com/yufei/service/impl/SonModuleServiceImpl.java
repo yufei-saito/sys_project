@@ -21,7 +21,7 @@ public class SonModuleServiceImpl implements SonModuleService {
 	private SonModuleDao dao;
 	
 	@Override
-	public List<SonModule> findByGid(Integer mid) {
+	public List<SonModule> findByMid(Integer mid) {
 		return dao.findByMid(mid);
 	}
 
@@ -30,7 +30,7 @@ public class SonModuleServiceImpl implements SonModuleService {
 		Integer maxCount = dao.findCount(mid);
 		p.setMaxCount(maxCount);
 		PageHelper.startPage(p.getPageNum(), p.getEveryCount());
-		List<SonModule> list = dao.findByMid(mid);
+		List<SonModule> list = dao.findByMidDesc(mid);
 		p.setList(list);
 		p.setMaxPage((int)Math.ceil(maxCount*1.0/p.getEveryCount()));
 		return p;
@@ -51,4 +51,10 @@ public class SonModuleServiceImpl implements SonModuleService {
 		dao.updateSonModule(sm);
 	}
 
+	@Override
+	public List<SonModule> findByMidDesc(Integer mid) {
+		return dao.findByMidDesc(mid);
+	}
+	
+	
 }

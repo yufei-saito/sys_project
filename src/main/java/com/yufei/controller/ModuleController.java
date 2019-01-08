@@ -22,6 +22,9 @@ public class ModuleController {
 	@Autowired
 	private ModuleService ms;
 	
+	@Autowired
+	private UserController uc;
+	
 	//Ajax请求查询模块列表
 	@RequestMapping("/ModuleListAjax.action")
 	public @ResponseBody List<Module> moduleListAjax(){
@@ -42,7 +45,7 @@ public class ModuleController {
 	@RequestMapping("/ModuleAdd.action")
 	public String moduleAdd(Module m) {
 		ms.addModule(m);
-		return "/ModuleList.action";
+		return "redirect:/ModuleList.action";
 	}
 	
 	//根据MID查询单个模块
@@ -58,7 +61,8 @@ public class ModuleController {
 	public String moduleUpdate(Module m,HttpServletRequest request) {
 		ms.updateModule(m);
 		User user = (User) request.getSession().getAttribute("MyUser");
-		return "redirect:/UserLogin.action?uname="+user.getUname()+"&upassword="+user.getUpassword();
+		uc.userLogin(user, request);
+		return "redirect:/ModuleList.action";
 	}
 	
 	//删除模块
@@ -66,7 +70,8 @@ public class ModuleController {
 	public String moduleDelete(Integer mid,HttpServletRequest request) {
 		ms.deleteModule(mid);
 		User user = (User) request.getSession().getAttribute("MyUser");
-		return "redirect:/UserLogin.action?uname="+user.getUname()+"&upassword="+user.getUpassword();
+		uc.userLogin(user, request);
+		return "redirect:/ModuleList.action";
 	}
 	
 	

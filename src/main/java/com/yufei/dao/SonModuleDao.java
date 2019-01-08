@@ -14,4 +14,6 @@ public interface SonModuleDao {
 	void updateSonModule(SonModule sm);
 	
 	SonModule findBySid(Integer sid);
+
+	List<SonModule> findByMidDesc(Integer mid);
 }

@@ -60,7 +60,7 @@ public class UserController {
 		for (Role role : roles) {
 			List<Module> mlist = ms.findByGid(role.getRid());
 			for (Module module : mlist) {
-				List<SonModule> slist = sms.findByGid(module.getMid());
+				List<SonModule> slist = sms.findByMid(module.getMid());
 				module.setSonModules(slist);
 			}
 			modules.addAll(mlist);
